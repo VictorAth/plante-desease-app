@@ -48,7 +48,7 @@ class PlantCNN(nn.Module):
 def load_model():
     model = PlantCNN(num_classes=len(class_names))
     # map_location='cpu' est crucial car le serveur n'a pas de GPU
-    model.load_state_dict(torch.load("best_model.pth", map_location=torch.device('cpu')))
+    model.load_state_dict(torch.load("best_plant_model.pth", map_location=torch.device('cpu')))
     model.eval()
     return model
 
