@@ -81,12 +81,18 @@ if img_file is not None:
     # --- SECTION AFFICHAGE (Le résultat) ---
     st.subheader("🔍 Analyse détaillée :")
     
+    # Remplace ta boucle for par celle-ci :
+    st.subheader("🔍 Analyse détaillée :")
+    
+    # On vérifie si la meilleure confiance est trop basse
+    if top_probs[0].item() < 0.50:
+        st.warning("⚠️ L'IA a un doute. Le diagnostic ci-dessous est peu fiable. Essayez de prendre la photo de plus près ou avec un meilleur éclairage.")
+
     for i in range(3):
         label = class_names[top_indices[i]]
         score = top_probs[i].item() * 100
         
-        # On affiche une barre de progression pour le style
         st.write(f"**{label}**")
         st.progress(score / 100)
         st.write(f"Confiance : {score:.1f}%")
-        st.divider() # Petite ligne de séparation
+        st.divider()
