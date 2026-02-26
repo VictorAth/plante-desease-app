@@ -74,8 +74,11 @@ if img_file is not None:
     with torch.no_grad():
         outputs = model(tensor)
         probs = torch.softmax(outputs, dim=1)[0]
-        conf, pred = torch.max(probs, 0)
+        top_probs, top_indices = probs.topk(3) # On récupère les 3 meilleurs
 
-    # Résultat
-    st.success(f"Diagnostic : **{class_names[pred]}**")
-    st.write(f"Fiabilité : {conf*100:.1f}%")
+    # Affichage amélioré
+st.subheader("Top 3 des Diagnostics possibles :")
+for i in range(3):
+    label = class_names[top_indices[i]]
+    score = top_probs[i].item() * 100
+    st.write(f"**{i+1}. {label}** : {score:.1f}%")
